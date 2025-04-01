@@ -1,5 +1,24 @@
 const canvas = document.querySelector("canvas");
 
+// 언어 설정
+const langKoBtn = document.getElementById("lang-ko")
+const langEnBtn = document.getElementById("lang-en")
+const textInputBtn = document.getElementById("text")
+function changeLanguage(lang) {
+    document.querySelectorAll("[data-en]").forEach(el => {
+        el.innerText = el.dataset[lang];
+    });
+    if (lang == "ko") {
+        textInputBtn.placeholder = "텍스트 입력";
+        textInputBtn.title = "텍스트 입력";
+    } else {
+        textInputBtn.placeholder = "Write Text Here";
+        textInputBtn.title = "Double Click";
+    }
+}
+langKoBtn.addEventListener("click", () => changeLanguage("ko"));
+langEnBtn.addEventListener("click", () => changeLanguage("en"));
+
 // brush
 const ctx = canvas.getContext("2d");
 
@@ -32,9 +51,11 @@ canvas.addEventListener("mouseleave", cancelPainting);
 
 // 선 굵기 설정
 const lineWidth = document.getElementById("line-width"); 
+const lineWidthDisplay = document.getElementById("line-width-display");
 ctx.lineWidth = lineWidth.value; 
 function onLineWidthChange(event) {
     ctx.lineWidth = event.target.value; 
+    lineWidthDisplay.innerText = `${event.target.value} px`;
 }
 lineWidth.addEventListener("change", onLineWidthChange); 
 
